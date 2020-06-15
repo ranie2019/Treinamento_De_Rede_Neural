@@ -2,15 +2,13 @@ import pygame
 from random import randint
 pygame.init()
 
+y = 500
 x = 350
-y = 450
-bran_x = 120
+pos_x = 350
+
 bran_y = randint(-1800, -100)
-amar_x = 515
 amar_y = randint(-1800, -100)
-verm_x = 350
 verm_y = randint(-1800, -100)
-larj_x = 700
 larj_y = randint(-1800, -100)
 
 time = 0
@@ -53,11 +51,24 @@ while janela_aberta:
     if comandos[pygame.K_LEFT] and x >= 130:
         x -= velocidade
 
-    if (bran_y >= +700) and (amar_y >= +700) and (verm_y >=  +700 ) and (larj_y >= +700):
+    # detecta colisao
+
+    if ((x + 100 > pos_x and y + 200 > bran_y)):
+        y = 100
+    if ((x +100 < pos_x and y +200 < bran_y)):
+        y = 100
+
+
+    if (bran_y >= +600):
         bran_y = randint(-1800, -100)
-        amar_y = randint(-1800, -150)
-        verm_y = randint(-1800, -200)
-        larj_y = randint(-1800, -100)
+    if (amar_y >= +600):
+        amar_y = randint(-1800, -300)
+    if (verm_y >=  +600):
+        verm_y = randint(-1800, -500)
+    if (larj_y >= +600):
+        larj_y = randint(-1800, -700)
+
+
 
     if (time < 20):
         time += 1
@@ -65,6 +76,7 @@ while janela_aberta:
         tempo_segundos += 1
         texto = font.render('Pontos ' +str(tempo_segundos), True, (255, 255, 255))
         time = 0
+    # velocidades dos carros
 
     bran_y -= velocidade_outros -2
     amar_y -= velocidade_outros -5
@@ -73,10 +85,10 @@ while janela_aberta:
 
     janela.blit(fundo, (0, 0))
     janela.blit(carro, (x, y))
-    janela.blit(carro_branco, (bran_x, bran_y))
-    janela.blit(carro_amarelo, (amar_x, amar_y))
-    janela.blit(carro_vermelho, (verm_x, verm_y))
-    janela.blit(carro_laranja, (larj_x, larj_y))
+    janela.blit(carro_branco, (pos_x -220, bran_y))
+    janela.blit(carro_amarelo, (pos_x -1, amar_y))
+    janela.blit(carro_vermelho, (pos_x +170, verm_y))
+    janela.blit(carro_laranja, (pos_x +360, larj_y))
     janela.blit(texto, pos_texto)
     pygame.display.update()
 
